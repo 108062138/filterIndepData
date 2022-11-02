@@ -1,0 +1,59 @@
+Set seed to 1667323005901949 because --seed was 0
+Initializing RocksDB Options from the specified file
+Initializing RocksDB Options from command-line flags
+Integrated BlobDB: blob cache disabled
+Keys:       16 bytes each (+ 0 bytes user-defined timestamp)
+Values:     100 bytes each (50 bytes after compression)
+Entries:    1000000
+Prefix:    0 bytes
+Keys per prefix:    0
+RawSize:    110.6 MB (estimated)
+FileSize:   62.9 MB (estimated)
+Write rate: 0 bytes/second
+Read rate: 0 ops/second
+Compression: Snappy
+Compression sampling rate: 0
+Memtablerep: SkipListFactory
+Perf Level: 1
+------------------------------------------------
+DB path: [rocksdbtest/dbbench]
+fillseekseq  :       0.982 micros/op 1018716 ops/sec 1.963 seconds 2000000 operations;
+
+
+** Compaction Stats [default] **
+Level    Files   Size     Score Read(GB)  Rn(GB) Rnp1(GB) Write(GB) Wnew(GB) Moved(GB) W-Amp Rd(MB/s) Wr(MB/s) Comp(sec) CompMergeCPU(sec) Comp(cnt) Avg(sec) KeyIn KeyDrop Rblob(GB) Wblob(GB)
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+  L0      2/0   59.31 MB   0.5      0.0     0.0      0.0       0.1      0.1       0.0   1.0      0.0    246.0      0.24              0.23         2    0.121       0      0       0.0       0.0
+ Sum      2/0   59.31 MB   0.0      0.0     0.0      0.0       0.1      0.1       0.0   1.0      0.0    246.0      0.24              0.23         2    0.121       0      0       0.0       0.0
+ Int      0/0    0.00 KB   0.0      0.0     0.0      0.0       0.1      0.1       0.0   1.0      0.0    246.0      0.24              0.23         2    0.121       0      0       0.0       0.0
+
+** Compaction Stats [default] **
+Priority    Files   Size     Score Read(GB)  Rn(GB) Rnp1(GB) Write(GB) Wnew(GB) Moved(GB) W-Amp Rd(MB/s) Wr(MB/s) Comp(sec) CompMergeCPU(sec) Comp(cnt) Avg(sec) KeyIn KeyDrop Rblob(GB) Wblob(GB)
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+High      0/0    0.00 KB   0.0      0.0     0.0      0.0       0.1      0.1       0.0   0.0      0.0    246.0      0.24              0.23         2    0.121       0      0       0.0       0.0
+
+Blob file count: 0, total size: 0.0 GB, garbage size: 0.0 GB, space amp: 0.0
+
+Uptime(secs): 2.9 total, 2.9 interval
+Flush(GB): cumulative 0.058, interval 0.058
+AddFile(GB): cumulative 0.000, interval 0.000
+AddFile(Total Files): cumulative 0, interval 0
+AddFile(L0 Files): cumulative 0, interval 0
+AddFile(Keys): cumulative 0, interval 0
+Cumulative compaction: 0.06 GB write, 20.14 MB/s write, 0.00 GB read, 0.00 MB/s read, 0.2 seconds
+Interval compaction: 0.06 GB write, 20.17 MB/s write, 0.00 GB read, 0.00 MB/s read, 0.2 seconds
+Stalls(count): 0 level0_slowdown, 0 level0_slowdown_with_compaction, 0 level0_numfiles, 0 level0_numfiles_with_compaction, 0 stop for pending_compaction_bytes, 0 slowdown for pending_compaction_bytes, 0 memtable_compaction, 0 memtable_slowdown, interval 0 total count
+Block cache LRUCache@0x556af83ac570#4528 capacity: 8.00 MB usage: 0.09 KB table_size: 256 occupancy: 88 collections: 1 last_copies: 0 last_secs: 1.7e-05 secs_since: 2
+Block cache entry stats(count,size,portion): Misc(1,0.00 KB,0%)
+
+** File Read Latency Histogram By Level [default] **
+
+** DB Stats **
+Uptime(secs): 2.9 total, 2.9 interval
+Cumulative writes: 1000K writes, 1000K keys, 1000K commit groups, 1.0 writes per commit group, ingest: 0.12 GB, 42.43 MB/s
+Cumulative WAL: 1000K writes, 0 syncs, 1000000.00 writes per sync, written: 0.12 GB, 42.43 MB/s
+Cumulative stall: 00:00:0.000 H:M:S, 0.0 percent
+Interval writes: 1000K writes, 1000K keys, 1000K commit groups, 1.0 writes per commit group, ingest: 124.93 MB, 42.49 MB/s
+Interval WAL: 1000K writes, 0 syncs, 1000000.00 writes per sync, written: 0.12 GB, 42.49 MB/s
+Interval stall: 00:00:0.000 H:M:S, 0.0 percent
+

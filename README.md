@@ -1,2 +1,2 @@
 # filterIndepData
-- remember to change the file path
+- remember to `chmod 777 run.sh`
