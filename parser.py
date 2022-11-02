@@ -21,6 +21,7 @@ def is_number(s):
         return False
 
 def handle( container, index, root):
+    print(root)
     block = container[index]
     res = []
     if index == 0:
@@ -83,7 +84,7 @@ def handleData(dataPath):
     for file in files:
         filePath = dataPath+str(file)
         f = open(filePath, 'r')
-        op = getOp( filePath, dataPath)
+        op = getOp( filePath, dataPath + 'bmk_')
         
         lines = f.readlines()
         cntEmpty = 0
