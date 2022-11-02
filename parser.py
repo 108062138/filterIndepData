@@ -8,8 +8,6 @@ import re
 
 from torch import true_divide
 
-kills = ['Initializing RocksDB Options from the specified file','Initializing RocksDB Options from command-line flags']
-
 def remove_prefix(text, prefix):
     if text.startswith(prefix):
         return text[len(prefix):]
@@ -75,17 +73,17 @@ def handle( container, index, root):
                                     
     return res
     
-def getOp(root):
-    rempref = root.removeprefix('/home/popo/Desktop/indepProj/data/bmk_')
+def getOp(root, dataPath):
+    rempref = root.removeprefix(dataPath)
     remsuff = rempref.split(',')[0]
     return remsuff
 
 def handleData(dataPath):
-    files = os.listdir('/home/popo/Desktop/indepProj/data/')
+    files = os.listdir(dataPath)
     for file in files:
         filePath = dataPath+str(file)
         f = open(filePath, 'r')
-        op = getOp(filePath)
+        op = getOp( filePath, dataPath)
         
         lines = f.readlines()
         cntEmpty = 0

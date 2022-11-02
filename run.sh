@@ -1,3 +1,4 @@
+tar -zxvf data.tar.gz
 cd data
-rm *.txt
+cd ..
 python3 parser.py
