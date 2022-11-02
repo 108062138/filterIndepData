@@ -110,5 +110,5 @@ def handleData(dataPath):
                 print(str(filtRes), file=f) 
                 
 if __name__ == '__main__':
-    dataPath = '/home/popo/Desktop/indepProj/data/'
+    dataPath = str(os.getcwd())+'/data/'
     handleData(dataPath)
