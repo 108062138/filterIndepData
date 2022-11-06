@@ -1,4 +1,6 @@
-tar -zxvf data_7_0_blackssd.tar.gz
-cd data
-cd ..
-python3 parser.py
+rm -rd pr*
+tarTag=".tar.gz"
+for tarFile in *.tar.gz;do
+    tmpDir=${tarFile%"$tarTag"}
+    python3 parser.py $tmpDir
+done

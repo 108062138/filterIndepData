@@ -110,13 +110,13 @@ def handleData(dataPath, processedRes):
                 print(str(filtRes), file=f) 
 
 if __name__ == '__main__':
-    ssdType = 'blackssd'
-    ssdSize = '7'
-    testIter = '0'
+    n = len(sys.argv)
+    dirName = str(sys.argv[1])
     
-    dirName = '/data'+ '_' + ssdSize + '_' + testIter + '_' + ssdType + '/'
-    dataPath = str(os.getcwd()) + dirName
-    processedRes = str(os.getcwd()) + '/processed_' + ssdSize + '_' + testIter + '_' + ssdType + '/'
+    dataPath = str(os.getcwd()) + '/'+ dirName + '/'
+    processedRes = str(os.getcwd()) + '/processed_' + dirName + '/'
+    print(dataPath, dirName, processedRes)
+    
     if not (os.path.exists(processedRes)):
         os.makedirs(processedRes)
 
