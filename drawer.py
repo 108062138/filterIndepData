@@ -6,7 +6,10 @@ import sys
 import getopt
 import re
 import numpy as np
+import matplotlib.pyplot as plt
 from torch import true_divide
+
+drawer = {}
 
 def remove_prefix(text, prefix):
     if text.startswith(prefix):
@@ -21,7 +24,6 @@ def is_number(s):
         return False
 
 def handle( container, index, root):
-    #print(root)
     block = container[index]
     res = []
     if index == 0:
@@ -79,7 +81,7 @@ def getOp(root, dataPath):
     remsuff = rempref.split(',')[0]
     return remsuff
 
-def handleData(dataPath, processedRes):
+def handleData(dataPath, processedRes, drawFile):
     files = os.listdir(dataPath)
     for file in files:
         filePath = dataPath+str(file)
@@ -101,23 +103,60 @@ def handleData(dataPath, processedRes):
                     container.append(block)
                 block = []
                 continue
-            #if line != 'Initializing RocksDB Options from the specified file\n' and line != 'Initializing RocksDB Options from command-line flags\n':
             block.append(line)
 
         with open(processedRes + str(file)+'.txt','w') as f:
             for i in range(0, len(container)):
                 filtRes = handle(container, i, op)
+                if i==0:
+                    nop = filtRes[2]
+                    costTime = filtRes[10]
+                    ctp = str(file).split('_')[3]
+                    print(op, ctp, nop, costTime)
+                    s = str(op+'_'+ctp)
+                    print(s)
+                    if op + '_' + ctp in drawer:
+                        print('hit')
+                        drawer[op+'_'+ctp][0].append(costTime)
+                        drawer[op+'_'+ctp][1].append(int(nop)/500000)
+                        
+                    else:
+                        drawer[op+'_'+ctp] = [[costTime], [int(nop)/500000]]
+                    
                 print(str(filtRes), file=f) 
 
 if __name__ == '__main__':
-    ssdType = 'blackssd'
-    ssdSize = '7'
-    testIter = '0'
+    n = len(sys.argv)
+    dirName = str(sys.argv[1])
     
-    dirName = '/data'+ '_' + ssdSize + '_' + testIter + '_' + ssdType + '/'
-    dataPath = str(os.getcwd()) + dirName
-    processedRes = str(os.getcwd()) + '/processed_' + ssdSize + '_' + testIter + '_' + ssdType + '/'
+    dataPath = str(os.getcwd()) + '/'+ dirName + '/'
+    processedRes = str(os.getcwd()) + '/processed_' + dirName + '/'
+    drawFile = str(os.getcwd()) + '/'+ dirName + '/' + 'collectedList'
+    print(dataPath, dirName, processedRes)
+    
     if not (os.path.exists(processedRes)):
         os.makedirs(processedRes)
-
-    handleData(dataPath, processedRes)
+    drawer = {}
+    handleData(dataPath, processedRes, drawFile)
+    
+    print(drawer)
+    
+    for key in drawer:
+        print(key)
+        y = drawer[key][0]
+        x = drawer[key][1]
+        
+        ybar = [ele for _,ele in sorted(zip(x,y))]
+        xbar = sorted(x)
+        print('haha')
+        print(x)
+        print(y)
+        print(ybar)
+        print(xbar)
+        
+        plt.plot(xbar, ybar, linestyle='dashed', linewidth=3, marker='o', markerfacecolor='blue', markersize=12, label=str(key))
+        plt.axis([0,15,0,9])
+        plt.legend()
+        plt.xlabel('num of operation')
+        plt.ylabel('time')
+    plt.show()

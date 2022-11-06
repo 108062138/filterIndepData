@@ -6,6 +6,7 @@ import sys
 import getopt
 import re
 import numpy as np
+import matplotlib.pyplot as plt
 from torch import true_divide
 
 def remove_prefix(text, prefix):
@@ -79,7 +80,7 @@ def getOp(root, dataPath):
     remsuff = rempref.split(',')[0]
     return remsuff
 
-def handleData(dataPath, processedRes):
+def handleData(dataPath, processedRes, drawFile):
     files = os.listdir(dataPath)
     for file in files:
         filePath = dataPath+str(file)
@@ -115,9 +116,10 @@ if __name__ == '__main__':
     
     dataPath = str(os.getcwd()) + '/'+ dirName + '/'
     processedRes = str(os.getcwd()) + '/processed_' + dirName + '/'
+    drawFile = str(os.getcwd()) + '/'+ dirName + '/' + 'collectedList'
     print(dataPath, dirName, processedRes)
     
     if not (os.path.exists(processedRes)):
         os.makedirs(processedRes)
 
-    handleData(dataPath, processedRes)
+    handleData(dataPath, processedRes, drawFile)
