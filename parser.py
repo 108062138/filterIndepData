@@ -5,7 +5,7 @@ import os
 import sys
 import getopt
 import re
-
+import numpy as np
 from torch import true_divide
 
 def remove_prefix(text, prefix):
@@ -79,7 +79,7 @@ def getOp(root, dataPath):
     remsuff = rempref.split(',')[0]
     return remsuff
 
-def handleData(dataPath):
+def handleData(dataPath, processedRes):
     files = os.listdir(dataPath)
     for file in files:
         filePath = dataPath+str(file)
@@ -104,11 +104,20 @@ def handleData(dataPath):
             #if line != 'Initializing RocksDB Options from the specified file\n' and line != 'Initializing RocksDB Options from command-line flags\n':
             block.append(line)
 
-        with open(str(file)+'.txt','w') as f:
+        with open(processedRes + str(file)+'.txt','w') as f:
             for i in range(0, len(container)):
                 filtRes = handle(container, i, op)
                 print(str(filtRes), file=f) 
-                
+
 if __name__ == '__main__':
-    dataPath = str(os.getcwd())+'/data/'
-    handleData(dataPath)
+    ssdType = 'blackssd'
+    ssdSize = '7'
+    testIter = '0'
+    
+    dirName = '/data'+ '_' + ssdSize + '_' + testIter + '_' + ssdType + '/'
+    dataPath = str(os.getcwd()) + dirName
+    processedRes = str(os.getcwd()) + '/processed_' + ssdSize + '_' + testIter + '_' + ssdType + '/'
+    if not (os.path.exists(processedRes)):
+        os.makedirs(processedRes)
+
+    handleData(dataPath, processedRes)
