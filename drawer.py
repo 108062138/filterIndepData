@@ -117,10 +117,10 @@ def handleData(dataPath, processedRes, drawFile):
                     if op + '_' + ctp in drawer:
                         print('hit')
                         drawer[op+'_'+ctp][0].append(costTime)
-                        drawer[op+'_'+ctp][1].append(int(nop)/500000)
+                        drawer[op+'_'+ctp][1].append(int(nop)/1000000)
                         
                     else:
-                        drawer[op+'_'+ctp] = [[costTime], [int(nop)/500000]]
+                        drawer[op+'_'+ctp] = [[costTime], [int(nop)/1000000]]
                     
                 print(str(filtRes), file=f) 
 
@@ -142,8 +142,8 @@ if __name__ == '__main__':
     
     for key in drawer:
         print(key)
-        y = drawer[key][0]
-        x = drawer[key][1]
+        y = [float(ele) for ele in drawer[key][0]]
+        x = [float(ele) for ele in drawer[key][1]]
         
         ybar = [ele for _,ele in sorted(zip(x,y))]
         xbar = sorted(x)
@@ -153,9 +153,11 @@ if __name__ == '__main__':
         print(ybar)
         print(xbar)
         
-        plt.plot(xbar, ybar, linestyle='dashed', linewidth=3, marker='o', markerfacecolor='blue', markersize=12, label=str(key))
-        plt.axis([0,15,0,9])
-        plt.legend()
-        plt.xlabel('num of operation')
-        plt.ylabel('time')
-        plt.show()
+        #plt.plot(xbar, ybar, linestyle='dashed', linewidth=3, marker='o', markerfacecolor='blue', markersize=12, label=str(key))
+        plt.plot(xbar, ybar, label=str(key))
+    
+    plt.axis([0,15,0,9])
+    plt.legend()
+    plt.xlabel('num of operation')
+    plt.ylabel('time')
+    plt.show()
