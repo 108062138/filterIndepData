@@ -154,9 +154,16 @@ if __name__ == '__main__':
         print(xbar)
         
         plt.plot(xbar, ybar, linestyle='dashed', linewidth=3, marker='o', markerfacecolor='blue', markersize=12, label=str(key))
-    
-    plt.axis([0,15,0,9])
+    genFigName = 'everything_' + str(dirName)
+    plt.title(genFigName)
+    plt.axis([0,9,0,16])
     plt.legend()
     plt.xlabel('num of operation')
     plt.ylabel('time')
+    
+    processedRes = str(os.getcwd()) + '/everyssdFig/'
+    if not (os.path.exists(processedRes)):
+        os.makedirs(processedRes)
+    plt.savefig(processedRes+genFigName)
+    
     plt.show()
