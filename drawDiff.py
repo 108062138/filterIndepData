@@ -185,7 +185,7 @@ if __name__ == '__main__':
     plt.savefig(processedRes+genFigName)
     plt.show()
     
-    print('enter  here')
+    print('enter  div different ssd')
     for key in differ:
         print(key)
         if key.split('_')[-1] == 'blackssd':
@@ -201,20 +201,55 @@ if __name__ == '__main__':
             
             y = differ[key][0]
             x = differ[key][1]
+            z = []
             for i in range(0, len(x)):
-                y[i] = differ[difKey][1][i] / y[i]
+                z.append(differ[difKey][1][i] / y[i])
             print(x,y)
             if ks[0][4] == 'r':
-                plt.plot(x, y, linestyle='dashed', linewidth=3, marker='*', markerfacecolor='red', markersize=12, label=ks[0])
+                plt.plot(x, z, linestyle='dashed', linewidth=3, marker='*', markerfacecolor='red', markersize=12, label=ks[0])
             else:
-                plt.plot(x, y, linestyle='dashed', linewidth=3, marker='.', markerfacecolor='blue', markersize=12, label=ks[0])
-    plt.title('diff cost time among zns and blackssd')
+                plt.plot(x, z, linestyle='dashed', linewidth=3, marker='.', markerfacecolor='blue', markersize=12, label=ks[0])
+    plt.title('div cost time among zns and blackssd')
     plt.legend()
     plt.axis([0,9,0,1])
     plt.xlabel('num of operation(1M op/unit)')
     plt.ylabel('ratio(#time on zns/#time on blackssd)')
-    genFigName = 'divTime_random_seqwrite_' + str(dirName)
+    genFigName = 'divTime_zns_by_blackssd_' + str(dirName)
     processedRes = str(os.getcwd()) + '/everyssdFig/'
     plt.savefig(processedRes+genFigName)
-    plt.show()     
+    plt.show()
     
+        
+    print('enter div same ssd')
+    for key in differ:
+        print(key)
+        if key.split('_')[0] == 'fillrandom':
+            print('zz')
+            ks = [str(ele) for ele in key.split('_')[1:]]
+            difKey = ''
+            for ele in ks:
+                if difKey == '':
+                    difKey = ele
+                else: difKey= difKey + '_' + ele
+            difKey = 'fillseq' + '_' + difKey
+            
+            
+            y = differ[key][0]
+            x = differ[key][1]
+            z = []
+            for i in range(0, len(x)):
+                z.append(differ[difKey][0][i] / y[i])
+            print(x,y)
+            if ks[-1] == 'znsssd':
+                plt.plot(x, z, linestyle='dashed', linewidth=3, marker='*', markerfacecolor='red', markersize=12, label=key)
+            else:
+                plt.plot(x, z, linestyle='dashed', linewidth=3, marker='.', markerfacecolor='blue', markersize=12, label=key)
+    plt.title('div cost time among randomandseq')
+    plt.legend()
+    plt.axis([0,9,0,1])
+    plt.xlabel('num of operation(1M op/unit)')
+    plt.ylabel('ratio(#time on seq/#time on random)')
+    genFigName = 'divTime_random_by_seqwrite_' + str(dirName)
+    processedRes = str(os.getcwd()) + '/everyssdFig/'
+    plt.savefig(processedRes+genFigName)
+    plt.show()
