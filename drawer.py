@@ -112,15 +112,13 @@ def handleData(dataPath, processedRes, drawFile):
                     costTime = filtRes[10]
                     ctp = str(file).split('_')[3]
                     print(op, ctp, nop, costTime)
-                    s = str(op+'_'+ctp)
-                    print(s)
-                    if op + '_' + ctp in drawer:
-                        print('hit')
-                        drawer[op+'_'+ctp][0].append(costTime)
-                        drawer[op+'_'+ctp][1].append(int(nop)/1000000)
+                    lineName = op + '_' + ctp
+                    if lineName in drawer:
+                        drawer[lineName][0].append(costTime)
+                        drawer[lineName][1].append(int(nop)/1000000)
                         
                     else:
-                        drawer[op+'_'+ctp] = [[costTime], [int(nop)/1000000]]
+                        drawer[lineName] = [[costTime], [int(nop)/1000000]]
                     
                 print(str(filtRes), file=f) 
 
@@ -136,9 +134,10 @@ if __name__ == '__main__':
     if not (os.path.exists(processedRes)):
         os.makedirs(processedRes)
     drawer = {}
+    
     handleData(dataPath, processedRes, drawFile)
     
-    print(drawer)
+    #print(drawer)
     
     for key in drawer:
         print(key)
@@ -147,19 +146,19 @@ if __name__ == '__main__':
         
         ybar = [ele for _,ele in sorted(zip(x,y))]
         xbar = sorted(x)
-        print('haha')
-        print(x)
-        print(y)
-        print(ybar)
-        print(xbar)
+        #print('haha')
+        #print(x)
+        #print(y)
+        #print(ybar)
+        #print(xbar)
         
         plt.plot(xbar, ybar, linestyle='dashed', linewidth=3, marker='o', markerfacecolor='blue', markersize=12, label=str(key))
     genFigName = 'everything_' + str(dirName)
     plt.title(genFigName)
     plt.axis([0,9,0,16])
     plt.legend()
-    plt.xlabel('num of operation')
-    plt.ylabel('time')
+    plt.xlabel('num of operation(1M op/unit)')
+    plt.ylabel('time(1 s/unit)')
     
     processedRes = str(os.getcwd()) + '/everyssdFig/'
     if not (os.path.exists(processedRes)):
