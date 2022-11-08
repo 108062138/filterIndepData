@@ -153,8 +153,7 @@ if __name__ == '__main__':
         print(ybar)
         print(xbar)
         
-        #plt.plot(xbar, ybar, linestyle='dashed', linewidth=3, marker='o', markerfacecolor='blue', markersize=12, label=str(key))
-        plt.plot(xbar, ybar, label=str(key))
+        plt.plot(xbar, ybar, linestyle='dashed', linewidth=3, marker='o', markerfacecolor='blue', markersize=12, label=str(key))
     
     plt.axis([0,15,0,9])
     plt.legend()
