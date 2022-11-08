@@ -1,4 +1,4 @@
-from curses.ascii import isdigit, isspace
+from curses.ascii import isspace
 from lib2to3.pgen2 import token
 import pathlib
 import os
@@ -7,7 +7,6 @@ import getopt
 import re
 import numpy as np
 import matplotlib.pyplot as plt
-from torch import true_divide
 
 drawer = {}
 
