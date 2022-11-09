@@ -160,7 +160,7 @@ if __name__ == '__main__':
             ybar = [ele for _,ele in sorted(zip(x,y))]
             xbar = sorted(x)
             if dirName.split('_')[-1] == 'blackssd':
-                plt.plot(xbar, ybar, linestyle='dashed', linewidth=3, marker='o', markerfacecolor='blue', markersize=12, label=str(key))
+                plt.plot(xbar, ybar, linestyle='dashed', linewidth=2, marker='d', markerfacecolor='blue', markersize=12, label=str(key))
                 differ[str(key)] = [ybar, xbar]
             else:
                 ks = [str(ele) for ele in key.split('_')[:-1]]
@@ -170,12 +170,12 @@ if __name__ == '__main__':
                         difKey = ele
                     else: difKey= difKey + '_' + ele
                 difKey = difKey + '_' + 'znsssd'
-                plt.plot(xbar, ybar, linestyle='dashed', linewidth=3, marker='H', markerfacecolor='red', markersize=12, label=str(difKey))
+                plt.plot(xbar, ybar, linestyle='dashed', linewidth=2, marker='s', markerfacecolor='red', markersize=12, label=str(difKey))
                 differ[difKey] = [ybar, xbar]
             
     genFigName = 'combine_' + str(dirName)
     plt.title(genFigName)
-    plt.axis([0,15,0,17])
+    plt.axis([0,9,0,17])
     plt.legend()
     plt.xlabel('num of operation(1M op/unit)')
     plt.ylabel('time(1 s/unit)')
