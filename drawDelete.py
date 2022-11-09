@@ -205,7 +205,6 @@ if __name__ == '__main__':
             z = []
             for i in range(0, len(x)):
                 z.append(differ[difKey][1][i] / y[i])
-            print(x,y)
             if ks[0][6] == 'r':
                 plt.plot(x, z, linestyle='dashed', linewidth=3, marker='d', markerfacecolor='red', markersize=12, label=ks[0])
             else:
@@ -239,7 +238,6 @@ if __name__ == '__main__':
             z = []
             for i in range(0, len(x)):
                 z.append(differ[difKey][0][i] / y[i])
-            print(x,y)
             if ks[-1] == 'znsssd':
                 plt.plot(x, z, linestyle='dashed', linewidth=3, marker='*', markerfacecolor='red', markersize=12, label=key)
             else:
@@ -253,3 +251,5 @@ if __name__ == '__main__':
     processedRes = str(os.getcwd()) + '/everyssdFig/'
     plt.savefig(processedRes+genFigName)
     plt.show()
+    
+    print('filename: ', processedRes+genFigName)
