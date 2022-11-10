@@ -160,7 +160,7 @@ if __name__ == '__main__':
             ybar = [ele for _,ele in sorted(zip(x,y))]
             xbar = sorted(x)
             if dirName.split('_')[-1] == 'blackssd':
-                plt.plot(xbar, ybar, linestyle='dashed', linewidth=2, marker='o', markerfacecolor='blue', markersize=12, label=str(key))
+                plt.plot(xbar, ybar, linestyle='dashed', linewidth=3, marker='o', markerfacecolor='blue', markersize=12, label=str(key))
                 differ[str(key)] = [ybar, xbar]
             else:
                 ks = [str(ele) for ele in key.split('_')[:-1]]
@@ -170,7 +170,7 @@ if __name__ == '__main__':
                         difKey = ele
                     else: difKey= difKey + '_' + ele
                 difKey = difKey + '_' + 'znsssd'
-                plt.plot(xbar, ybar, linestyle='dashed', linewidth=2, marker='s', markerfacecolor='red', markersize=12, label=str(difKey))
+                plt.plot(xbar, ybar, linestyle='dashed', linewidth=3, marker='s', markerfacecolor='red', markersize=12, label=str(difKey))
                 differ[difKey] = [ybar, xbar]
             
     genFigName = 'combine_' + str(dirName)
@@ -206,10 +206,10 @@ if __name__ == '__main__':
             for i in range(0, len(x)):
                 z.append(differ[difKey][1][i] / y[i])
             if ks[0][6] == 'r':
-                plt.plot(x, z, linestyle='dashed', linewidth=3, marker='d', markerfacecolor='red', markersize=12, label=ks[0])
+                plt.plot(x, z, linestyle='dashed', linewidth=3, marker='d', markerfacecolor='red', markersize=12, label=difKey + '/' +key)
             else:
-                plt.plot(x, z, linestyle='dashed', linewidth=3, marker='s', markerfacecolor='blue', markersize=12, label=ks[0])
-    plt.title('div cost time among zns and blackssd')
+                plt.plot(x, z, linestyle='dashed', linewidth=3, marker='s', markerfacecolor='blue', markersize=12, label=difKey + '/' +key)
+    plt.title('cost time ratio(T_zns/T_blackssd)')
     plt.legend()
     plt.axis([0,9,0,1])
     plt.xlabel('num of operation(1M op/unit)')
@@ -239,10 +239,10 @@ if __name__ == '__main__':
             for i in range(0, len(x)):
                 z.append(differ[difKey][0][i] / y[i])
             if ks[-1] == 'znsssd':
-                plt.plot(x, z, linestyle='dashed', linewidth=3, marker='*', markerfacecolor='red', markersize=12, label=key)
+                plt.plot(x, z, linestyle='dashed', linewidth=3, marker='*', markerfacecolor='red', markersize=12, label=difKey + '/' +key)
             else:
-                plt.plot(x, z, linestyle='dashed', linewidth=3, marker='.', markerfacecolor='blue', markersize=12, label=key)
-    plt.title('div cost time among randomandseq')
+                plt.plot(x, z, linestyle='dashed', linewidth=3, marker='.', markerfacecolor='blue', markersize=12, label=difKey + '/' +key)
+    plt.title('cost time ratio(T_seq/T_random)')
     plt.legend()
     plt.axis([0,9,0,1])
     plt.xlabel('num of operation(1M op/unit)')

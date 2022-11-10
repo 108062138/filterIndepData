@@ -162,7 +162,7 @@ if __name__ == '__main__':
             ybar = [ele for _,ele in sorted(zip(x,y))]
             xbar = sorted(x)
             if dirName.split('_')[-1] == 'blackssd':
-                plt.plot(xbar, ybar, linestyle='dashed', linewidth=3, marker='o', markerfacecolor='blue', markersize=12, label=str(key))
+                plt.plot(xbar, ybar, linestyle='dashed', linewidth=3, marker='d', markerfacecolor='blue', markersize=12, label=str(key))
                 differ[str(key)] = [ybar, xbar]
             else:
                 ks = [str(ele) for ele in key.split('_')[:-1]]
@@ -172,7 +172,7 @@ if __name__ == '__main__':
                         difKey = ele
                     else: difKey= difKey + '_' + ele
                 difKey = difKey + '_' + 'znsssd'
-                plt.plot(xbar, ybar, linestyle='dashed', linewidth=3, marker='H', markerfacecolor='red', markersize=12, label=str(difKey))
+                plt.plot(xbar, ybar, linestyle='dashed', linewidth=3, marker='s', markerfacecolor='red', markersize=12, label=str(difKey))
                 differ[difKey] = [ybar, xbar]
             
     genFigName = 'compactionRatio' + str(dirName)
@@ -186,11 +186,47 @@ if __name__ == '__main__':
         os.makedirs(processedRes)
     plt.savefig(processedRes+genFigName)
     plt.show()
-        
+    
+    
+    print('enter  div different ssd')
+    for key in differ:
+        print(key)
+        if key.split('_')[-1] == 'blackssd':
+            print('zz')
+            ks = [str(ele) for ele in key.split('_')[:-1]]
+            difKey = ''
+            for ele in ks:
+                if difKey == '':
+                    difKey = ele
+                else: difKey= difKey + '_' + ele
+            difKey = difKey + '_' + 'znsssd'
+            
+            
+            y = differ[key][0]
+            x = differ[key][1]
+            z = []
+            for i in range(0, len(x)):
+                z.append((differ[difKey][0][i] + 0.000001)/ (y[i] + 0.000001))
+            if ks[0][0] == 'a':
+                plt.plot(x, z, linestyle='dashed', linewidth=3, marker='d', markerfacecolor='red', markersize=12, label=difKey + '/' +key)
+            else:
+                plt.plot(x, z, linestyle='dashed', linewidth=3, marker='s', markerfacecolor='blue', markersize=12, label=difKey + '/' +key)
+    plt.title('compacting ratio(R_zns/R_blackssd) in same benchmark')
+    plt.axhline(y = 1, color = 'g', linestyle = '-')
+    plt.legend()
+    plt.axis([0,9,0,3])
+    plt.xlabel('num of operation(1M op/unit)')
+    plt.ylabel('ratio(#time on zns/#time on blackssd)')
+    genFigName = 'divTime_zns_by_blackssd_' + str(dirName)
+    processedRes = str(os.getcwd()) + '/everyssdFig/'
+    plt.savefig(processedRes+genFigName)
+    plt.show()
+    
+    
     print('enter div same ssd')
     for key in differ:
         print(key)
-        if key.split('_')[0] == 'fillrandom':
+        if key.split('_')[0] == 'updaterandom':
             print('zz')
             ks = [str(ele) for ele in key.split('_')[1:]]
             difKey = ''
@@ -198,20 +234,21 @@ if __name__ == '__main__':
                 if difKey == '':
                     difKey = ele
                 else: difKey= difKey + '_' + ele
-            difKey = 'fillseq' + '_' + difKey
+            difKey = 'appendrandom' + '_' + difKey
             
             
             y = differ[key][0]
             x = differ[key][1]
             z = []
             for i in range(0, len(x)):
-                z.append(differ[difKey][0][i] / y[i])
+                z.append((differ[difKey][0][i] + 0.000001)/ (y[i] + 0.000001))
             print(x,y)
             if ks[-1] == 'znsssd':
-                plt.plot(x, z, linestyle='dashed', linewidth=3, marker='*', markerfacecolor='red', markersize=12, label=key)
+                plt.plot(x, z, linestyle='dashed', linewidth=3, marker='*', markerfacecolor='red', markersize=12, label = difKey + '/' + key)
             else:
-                plt.plot(x, z, linestyle='dashed', linewidth=3, marker='.', markerfacecolor='blue', markersize=12, label=key)
+                plt.plot(x, z, linestyle='dashed', linewidth=3, marker='.', markerfacecolor='blue', markersize=12, label = difKey + '/' + key)
     plt.title('compaction ratio among same ssd on different benchmark')
+    plt.axhline(y = 1, color = 'g', linestyle = '-')
     plt.legend()
     plt.axis([0,14,0,2])
     plt.xlabel('num of operation(1M op/unit)')

@@ -207,12 +207,13 @@ if __name__ == '__main__':
                 z.append(differ[difKey][1][i] / y[i])
             print(x,y)
             if ks[0][4] == 'r':
-                plt.plot(x, z, linestyle='dashed', linewidth=3, marker='d', markerfacecolor='red', markersize=12, label=ks[0])
+                plt.plot(x, z, linestyle='dashed', linewidth=3, marker='d', markerfacecolor='red', markersize=12, label=difKey + '/' +key)
             else:
-                plt.plot(x, z, linestyle='dashed', linewidth=3, marker='s', markerfacecolor='blue', markersize=12, label=ks[0])
-    plt.title('div cost time among zns and blackssd')
+                plt.plot(x, z, linestyle='dashed', linewidth=3, marker='s', markerfacecolor='blue', markersize=12, label=difKey + '/' +key)
+    plt.axhline(y = 1, color = 'g', linestyle = '-')
+    plt.title('cost time ratio(T_zns/T_blackssd)')
     plt.legend()
-    plt.axis([0,9,0,2])
+    plt.axis([0,14,0,2])
     plt.xlabel('num of operation(1M op/unit)')
     plt.ylabel('ratio(#time on zns/#time on blackssd)')
     genFigName = 'divTime_zns_by_blackssd_' + str(dirName)
@@ -220,7 +221,7 @@ if __name__ == '__main__':
     plt.savefig(processedRes+genFigName)
     plt.show()
     
-    exit(1)
+    
         
     print('enter div same ssd')
     for key in differ:
@@ -243,15 +244,16 @@ if __name__ == '__main__':
                 z.append(differ[difKey][0][i] / y[i])
             print(x,y)
             if ks[-1] == 'znsssd':
-                plt.plot(x, z, linestyle='dashed', linewidth=3, marker='*', markerfacecolor='red', markersize=12, label=key)
+                plt.plot(x, z, linestyle='dashed', linewidth=3, marker='*', markerfacecolor='red', markersize=12, label=difKey + '/' +key)
             else:
-                plt.plot(x, z, linestyle='dashed', linewidth=3, marker='.', markerfacecolor='blue', markersize=12, label=key)
-    plt.title('div cost time among randomandseq')
+                plt.plot(x, z, linestyle='dashed', linewidth=3, marker='.', markerfacecolor='blue', markersize=12, label=difKey + '/' +key)
+    plt.axhline(y = 1, color = 'g', linestyle = '-')
+    plt.title('cost time ratio(T_seq/T_rand)')
     plt.legend()
-    plt.axis([0,9,0,1])
+    plt.axis([0,14,0,2])
     plt.xlabel('num of operation(1M op/unit)')
     plt.ylabel('ratio(#time on seq/#time on random)')
-    genFigName = 'divTime_random_delete_by_seq_delete_' + str(dirName)
+    genFigName = 'divTime_random_comb_by_seq_comb_' + str(dirName)
     processedRes = str(os.getcwd()) + '/everyssdFig/'
     plt.savefig(processedRes+genFigName)
     plt.show()

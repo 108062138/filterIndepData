@@ -160,7 +160,7 @@ if __name__ == '__main__':
             ybar = [ele for _,ele in sorted(zip(x,y))]
             xbar = sorted(x)
             if dirName.split('_')[-1] == 'blackssd':
-                plt.plot(xbar, ybar, linestyle='dashed', linewidth=2, marker='d', markerfacecolor='blue', markersize=12, label=str(key))
+                plt.plot(xbar, ybar, linestyle='dashed', linewidth=3, marker='d', markerfacecolor='blue', markersize=12, label=str(key))
                 differ[str(key)] = [ybar, xbar]
             else:
                 ks = [str(ele) for ele in key.split('_')[:-1]]
@@ -170,12 +170,12 @@ if __name__ == '__main__':
                         difKey = ele
                     else: difKey= difKey + '_' + ele
                 difKey = difKey + '_' + 'znsssd'
-                plt.plot(xbar, ybar, linestyle='dashed', linewidth=2, marker='s', markerfacecolor='red', markersize=12, label=str(difKey))
+                plt.plot(xbar, ybar, linestyle='dashed', linewidth=3, marker='s', markerfacecolor='red', markersize=12, label=str(difKey))
                 differ[difKey] = [ybar, xbar]
             
     genFigName = 'combine_' + str(dirName)
     plt.title(genFigName)
-    plt.axis([0,9,0,17])
+    plt.axis([0,9,0,180])
     plt.legend()
     plt.xlabel('num of operation(1M op/unit)')
     plt.ylabel('time(1 s/unit)')
@@ -205,11 +205,11 @@ if __name__ == '__main__':
             for i in range(0, len(x)):
                 z.append(differ[difKey][1][i] / y[i])
             print(x,y)
-            if ks[0][4] == 'r':
-                plt.plot(x, z, linestyle='dashed', linewidth=3, marker='*', markerfacecolor='red', markersize=12, label=ks[0])
+            if ks[0][0] == 'u':
+                plt.plot(x, z, linestyle='dashed', linewidth=3, marker='*', markerfacecolor='red', markersize=12, label=difKey+'/'+key)
             else:
-                plt.plot(x, z, linestyle='dashed', linewidth=3, marker='.', markerfacecolor='blue', markersize=12, label=ks[0])
-    plt.title('div cost time among zns and blackssd')
+                plt.plot(x, z, linestyle='dashed', linewidth=3, marker='.', markerfacecolor='blue', markersize=12, label=difKey+'/'+key)
+    plt.title('cost time ratio(T_zns/T_blackssd) in same benchmark')
     plt.legend()
     plt.axis([0,9,0,1])
     plt.xlabel('num of operation(1M op/unit)')
@@ -223,7 +223,7 @@ if __name__ == '__main__':
     print('enter div same ssd')
     for key in differ:
         print(key)
-        if key.split('_')[0] == 'fillrandom':
+        if key.split('_')[0] == 'updaterandom':
             print('zz')
             ks = [str(ele) for ele in key.split('_')[1:]]
             difKey = ''
@@ -231,7 +231,7 @@ if __name__ == '__main__':
                 if difKey == '':
                     difKey = ele
                 else: difKey= difKey + '_' + ele
-            difKey = 'fillseq' + '_' + difKey
+            difKey = 'appendrandom' + '_' + difKey
             
             
             y = differ[key][0]
@@ -241,12 +241,13 @@ if __name__ == '__main__':
                 z.append(differ[difKey][0][i] / y[i])
             print(x,y)
             if ks[-1] == 'znsssd':
-                plt.plot(x, z, linestyle='dashed', linewidth=3, marker='*', markerfacecolor='red', markersize=12, label=key)
+                plt.plot(x, z, linestyle='dashed', linewidth=3, marker='*', markerfacecolor='red', markersize=12, label=difKey+'/'+key)
             else:
-                plt.plot(x, z, linestyle='dashed', linewidth=3, marker='.', markerfacecolor='blue', markersize=12, label=key)
-    plt.title('div cost time among randomandseq')
+                plt.plot(x, z, linestyle='dashed', linewidth=3, marker='.', markerfacecolor='blue', markersize=12, label=difKey+'/'+key)
+    plt.title('cost time ratio(T_append/T_update) in same ssd')
+    plt.axhline(y = 1, color = 'g', linestyle = '-')
     plt.legend()
-    plt.axis([0,9,0,1])
+    plt.axis([0,9,0,2])
     plt.xlabel('num of operation(1M op/unit)')
     plt.ylabel('ratio(#time on seq/#time on random)')
     genFigName = 'divTime_random_by_seqwrite_' + str(dirName)
